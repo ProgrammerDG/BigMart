@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Mart</title>
+    <!-- favicon link -->
+    <link href="images/website_logo_icon.ico" rel="icon">
+    <!-- css link -->
+    <link href="home.css" rel="stylesheet">
+    <!-- animate css link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- font awesome link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body onload="greeting()">
+    <!-- navbar -->
+    <nav>
+        <div id="logoArea">
+            <img src="images/website_logo.png" alt="Logo" id="websiteLogo">
+            <h1 id="websiteName">Big Mart</h1>
+        </div>
+        <div id="searchArea">
+            <input type="text" id="search" placeholder="Search Products">
+            <button type="button" id="searchBtn" onclick="searchBtnAction()"><i class="fa fa-search fa-2x"></i></button>
+        </div>
+        <div id="cartArea" onclick="cartSection()">
+            <a id="cart"><i class="fa fa-shopping-cart fa-3x"></i></a>
+            <div id="cartCount">0</div>
+        </div>
+    </nav>
+    <!-- home icon -->
+    <div id="homeIcon">
+        <i class="fa fa-home fa-3x" onclick="homeDisplay()"></i>
+    </div>
+    <!-- extra icons -->
+    <div id="extraIcons">
+        <div>
+            <abbr title="See all Sections in One Go"><i class="fa fa-arrow-right fa-2x" onclick="allDisplay()">All Products</i></abbr>
+            <abbr title="Dark/Night Mode"><i class="fa fa-moon-o fa-3x" onclick="darkMode()"></i></abbr>
+        </div>
+    </div>
+    <!-- cart section -->
+    <section id="cartSection">
+        <h1 id="bigMartCartH1">Big Mart's Cart <i class="fa fa-shopping-cart fa-1x"></i></h1>
+        <h1 id="cartRemoveAll" onclick="cartRemoveAll()">Remove all</h1>
+        <div id="cartContainer"></div>
+        <div id="cartTotalBill">Total Bill = &#8377; 0</div>
+        <div id="cartTotalDiscount">Total Discount = 0%</div>
+        <div id="cartTotalPayble">Please Pay = &#8377; 0</div>
+        <!-- shipping form -->
+        <h1 id="shippingDetailsH1">Shipping Details &nbsp;&nbsp;<i class="fa fa-truck fa-2x"></i></h1>
+        <form id="shippingDetailsForm">
+            <table>
+                <tr>
+                    <td><label for="fname">Full Name:<span style="color: red;">*</span></label></td>
+                    <td><input type="text" id="fname" required></td>
+                </tr>
+                <tr>
+                    <td><label for="fphone">Phone No.:<span style="color: red;">*</span></label></td>
+                    <td><input type="tel" id="fphone" required min="10" max="10" placeholder="ex: 1234567890"></td>
+                </tr>
+                <tr>
+                    <td><label for="femail">Email:<span style="color: red;">*</span></label></td>
+                    <td><input type="email" id="femail" required></td>
+                </tr>
+                <tr>
+                    <td><label for="faddress">Address:<span style="color: red;">*</span></label></td>
+                    <td><input type="text" id="faddress" required placeholder="House no. / colony / destination"></td>
+                </tr>
+                <tr>
+                    <td><label for="fcity">City:<span style="color: red;">*</span></label></td>
+                    <td><input type="text" id="fcity" required></td>
+                </tr>
+                <tr>
+                    <td><label for="fstate">State:<span style="color: red;">*</span></label></td>
+                    <td><select id="fstate" required>
+                            <option>Andhra Pradesh</option>
+                            <option>Arunachal Pradesh</option>
+                            <option>Assam</option>
+                            <option>Bihar</option>
+                            <option>Chattisgarh</option>
+                            <option>Goa</option>
+                            <option>Gujrat</option>
+                            <option selected>Haryana</option>
+                            <option>Himachal Pradesh</option>
+                            <option>Jharkhand</option>
+                            <option>Karnataka</option>
+                            <option>Kerala</option>
+                            <option>Madhya Pradesh</option>
+                            <option>Maharashtra</option>
+                            <option>Manipur</option>
+                            <option>Meghalaya</option>
+                            <option>Mizoram</option>
+                            <option>Nagaland</option>
+                            <option>Odisha</option>
+                            <option>Punjab</option>
+                            <option>Rajasthan</option>
+                            <option>Sikkim</option>
+                            <option>Tamil Nadu</option>
+                            <option>Telangana</option>
+                            <option>Tripura</option>
+                            <option>Uttar Pradesh</option>
+                            <option>Uttrakhand</option>
+                            <option>West Bengal</option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td><label for="fpincode">Pincode:<span style="color: red;">*</span></label></td>
+                    <td><input type="number" id="fpincode" required placeholder="Enter valid pin"></td>
+                </tr>
+                <tr>
+                    <td><label for="ftime">Preffered Time for Delivery: </label></td>
+                    <td><input type="time" id="ftime"></td>
+                </tr>
+                <tr>
+                    <td><label for="finstructions">Any Instructions (optional): </label></td>
+                    <td><textarea id="finstructions" placeholder="Write here"></textarea></td>
+                </tr>
+            </table>
+        </form>
+        <!-- payment section -->
+        <h1 id="paymentSectionH1">Payment Details &nbsp;&nbsp;<i class="fa fa-money fa-2x"></i></h1>
+        <div id="paymentSection">
+            <label for="cashOnDelivery"><i class="fa fa-money"></i> Cash On Delivery</label>
+            <input type="radio" name="paymentMode" id="cashOnDelivery">
+            <label for="creditCard"><i class="fa fa-credit-card-alt"> Credit Card</i></label>
+            <input type="radio" name="paymentMode" id="creditCard">
+            <label for="debitCard"><i class="fa fa-cc-visa"> Debit Card</i>
+            </label>
+            <input type="radio" name="paymentMode" id="debitCard">
+            <label for="masterCard"><i class="fa fa-cc-mastercard"> Master Card</i>
+            </label>
+            <input type="radio" name="paymentMode" id="masterCard"><br><br><br>
+            <label for="checkbox">I have read all the details carefully. <span style="color: red;">*</span></label>
+            <input type="checkbox" id="checkbox" required>
+            <div id="placeOrderDiv"><button type="submit" id="placeOrderBtn"
+                    onclick="placeOrderFunc()">Place Order</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- home section -->
+    <section id="homeSection">
+        <div id="greetings"></div>
+        <!-- carousel -->
+        <div id="carouselContainer">
+            <button type="button" id="carouselLeftBtn"><i class="fa fa-chevron-left"></i></button>
+            <img src="images/carousel1.jpg" id="carousel">
+            <button type="button" id="carouselRightBtn"><i class="fa fa-chevron-right"></i></button>
+        </div>
+        <!-- links to other pages -->
+        <div id="linksToOtherPages">
+            <a onclick="electronicsDisplay()"><img src="images/electronics.jpg" alt="Electronics"></a>
+            <a onclick="apparelsDisplay()"><img src="images/apparels.jpg" alt="Apparels"></a>
+            <a onclick="footwearsDisplay()"><img src="images/footwears.jpg" alt="Footwears"></a>
+            <a onclick="accessoriesDisplay()"><img src="images/accessories.jpg" alt="Accessories"></a>
+            <a onclick="stationariesDisplay()"><img src="images/stationeries.jpg" alt="Stationeries"></a>
+        </div>
+        <div id="linksToOtherPagesNames">
+            <h2>Electronics</h2>
+            <h2>Apparels</h2>
+            <h2>Footwear</h2>
+            <h2>Accessories</h2>
+            <h2>Stationery</h2>
+        </div>
+        <!-- todays top deals -->
+        <fieldset class="pCardFieldset">
+            <legend class="pCardLegend">Today's Top Deals</legend>
+            <div class="pCardContainer">
+                <div class="pCard">
+                    <img src="images/mobile6.jpeg" alt="Product">
+                    <div class="pCardDiv">
+                        <h4 class="pCardName">One Pluss Mobile</h4>
+                        <p class="pCardNewPrice">&#8377; 15,999</p>
+                        <p class="pCardOldPrice">&#8377; 18,999</p><button type="button" class="pCardBtn"
+                            onclick="cartAdd('OnePlussMobile',15999,'images/mobile6.jpeg')">Add to Cart</button><br>
+                    </div>
+                </div>
+                <div class="pCard">
+                    <img src="images/watch7.jfif" alt="Product">
+                    <div class="pCardDiv">
+                        <h4 class="pCardName">Fossill Watch</h4>
+                        <p class="pCardNewPrice">&#8377; 2,999</p>
+                        <p class="pCardOldPrice">&#8377; 3,999</p><button type="button" class="pCardBtn"
+                            onclick="cartAdd('FossillWatch',2999,'images/watch7.jfif')">Add to Cart</button><br>
+                    </div>
+                </div>
+                <div class="pCard">
+                    <img src="images/mobile7.jpg" alt="Product">
+                    <div class="pCardDiv">
+                        <h4 class="pCardName">Reelme Mobile</h4>
+                        <p class="pCardNewPrice">&#8377; 20,990</p>
+                        <p class="pCardOldPrice">&#8377; 22,999</p><button type="button" class="pCardBtn"
+                            onclick="cartAdd('ReelmeMobile',20990,'images/mobile7.jpg')">Add to Cart</button><br>
+                    </div>
+                </div>
+                <div class="pCard">
+                    <img src="images/led6.jpeg" alt="Product">
+                    <div class="pCardDiv">
+                        <h4 class="pCardName">Samsong Led</h4>
+                        <p class="pCardNewPrice">&#8377; 25,999</p>
+                        <p class="pCardOldPrice">&#8377; 30,999</p><button type="button" class="pCardBtn"
+                            onclick="cartAdd('SamsongLed',25999,'images/led6.jpeg')">Add to Cart</button><br>
+                    </div>
+                </div>
+                <div class="pCard">
+                    <img src="images/led7.jpg" alt="Product">
+                    <div class="pCardDiv">
+                        <h4 class="pCardName">Sonny Led</h4>
+                        <p class="pCardNewPrice">&#8377; 32,000</p>
+                        <p class="pCardOldPrice">&#8377; 37,999</p><button type="button" class="pCardBtn"
+                            onclick="cartAdd('SonnyLed',32000,'images/led7.jpg')">Add to Cart</button><br>
+                    </div>
+                </div>
+                <div class="pCard">
+                    <img src="images/watch6.jpg" alt="Product">
+                    <div class="pCardDiv">
+                        <h4 class="pCardName">Reelme Watch</h4>
+                        <p class="pCardNewPrice">&#8377; 1,900</p>
+                        <p class="pCardOldPrice">&#8377; 2,500</p><button type="button" class="pCardBtn"
+                            onclick="cartAdd('ReelmeWatch',1900,'images/watch6.jpg')">Add to Cart</button><br>
+                    </div>
+                </div>
+                <div class="pCard">
+                    <img src="images/tshirt6.jpg" alt="Product">
+                    <div class="pCardDiv">
+                        <h4 class="pCardName">US POLOO Tshirt</h4>
+                        <p class="pCardNewPrice">&#8377; 999</p>
+                        <p class="pCardOldPrice">&#8377; 1,500</p><button type="button" class="pCardBtn"
+                            onclick="cartAdd('USPOLOOTshirt',999,'images/tshirt6.jpg')">Add to Cart</button><br>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <h1 id="gameHeading">Play and win</h1>
+        <details class="gameTerms" id="gameTerms">
+            <summary class="gameTerms">Terms & Conditions</summary>
+            <li>Firstly press on "PLAY" button to start game.</li>
+            <li>Then press on each card one by one to split them.</li>
+            <li>Number on each card will be added to your score.</li>
+            <li>If you score less than 20 you will get voucher of 5% discount.</li>
+            <li>If you score between 20 & 30 (both included) you will get voucher of 10% discount. </li>
+            <li>If you score between 31 & 38 (both included) you will get voucher of 15% discount. </li>
+            <li>If you score housefull (i.e. 39) you will get voucher of 30% discount. </li>
+            <li>The discount will be automatically taken care, once you place the orde in the cart section.</li>
+            <h4>Thank You.</h4>
+        </details>
+        <abbr title="Press to start playing." id="gameStartBtnAbbr"><button type="button"
+                id="gameStartBtn">Play</button></abbr>
+        <div id="gameContainer">
+            <img src="images/card_back.png" id="card1">
+            <img src="images/card_back.png" id="card2">
+            <img src="images/card_back.png" id="card3">
+        </div>
+    </section>
+
+    <!-- electronics section -->
+    <section id="electronicsSection" style="display:none;">
+        <h1 id="eeMainHeading">Electronics</h1>
+        <i class="fa fa-bars fa-2x" id="electronicsHam" onclick="electronicsHam()"></i>
+        <div id="eeNavbar"><a href="#eeMobiles">Mobiles</a><a href="#eeTelevisions">Televisions</a><a
+                href="#eeLaptops">Laptops</a><a href="#eeWatches">Watches</a></div>
+        <!-- main container -->
+        <div id="eeMainContainer">
+            <!-- left container -->
+            <div id="eeLeftContainer">
+                <!-- mobiles -->
+                <fieldset class="pCardFieldset" id="eeMobiles">
+                    <legend class="pCardLegend">Mobile Phones</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/mobile1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Aple Mobile 1</h4>
+                                <p class="pCardNewPrice">&#8377; 75,000</p>
+                                <p class="pCardOldPrice">&#8377; 80,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('ApleMobile1',75000,'images/mobile1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/mobile2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Aple Mobile 2</h4>
+                                <p class="pCardNewPrice">&#8377; 69,000</p>
+                                <p class="pCardOldPrice">&#8377; 70,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('ApleMobile2',69000,'images/mobile2.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/mobile3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Samsong Mobile 1</h4>
+                                <p class="pCardNewPrice">&#8377; 47,500</p>
+                                <p class="pCardOldPrice">&#8377; 48,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('SamsongMobile1',47500,'images/mobile3.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/mobile4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Redmii Mobile 1</h4>
+                                <p class="pCardNewPrice">&#8377; 9,999</p>
+                                <p class="pCardOldPrice">&#8377; 10,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('RedmiiMobile1',9999,'images/mobile4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- televisions -->
+                <fieldset class="pCardFieldset" id="eeTelevisions">
+                    <legend class="pCardLegend">Televisions</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/led1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Samsong Led 1</h4>
+                                <p class="pCardNewPrice">&#8377; 49,000</p>
+                                <p class="pCardOldPrice">&#8377; 50,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('SamsongLed1',49000,'images/led1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/led2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Sonny Led 1</h4>
+                                <p class="pCardNewPrice">&#8377; 69,000</p>
+                                <p class="pCardOldPrice">&#8377; 70,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('SonnyLed1',69000,'images/led2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/led3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Redmii Led 1</h4>
+                                <p class="pCardNewPrice">&#8377; 47,500</p>
+                                <p class="pCardOldPrice">&#8377; 48,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('RedmiiLed1',47500,'images/led3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/led4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Panosonic Led 1</h4>
+                                <p class="pCardNewPrice">&#8377; 25,000</p>
+                                <p class="pCardOldPrice">&#8377; 26,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('PanosonicLed1',25000,'images/led4.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- laptops -->
+                <fieldset class="pCardFieldset" id="eeLaptops">
+                    <legend class="pCardLegend">Laptops</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/laptop1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Asos Laptop 1</h4>
+                                <p class="pCardNewPrice">&#8377; 49,000</p>
+                                <p class="pCardOldPrice">&#8377; 50,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('AsosLaptop1',49000,'images/laptop1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/laptop2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">HPP Laptop 1</h4>
+                                <p class="pCardNewPrice">&#8377; 69,000</p>
+                                <p class="pCardOldPrice">&#8377; 70,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('HPPLaptop1',69000,'images/laptop2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/laptop3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Del Laptop1</h4>
+                                <p class="pCardNewPrice">&#8377; 47,500</p>
+                                <p class="pCardOldPrice">&#8377; 48,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('DelLaptop1',47500,'images/laptop3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/laptop4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Lenoovo Laptop 1</h4>
+                                <p class="pCardNewPrice">&#8377; 45,000</p>
+                                <p class="pCardOldPrice">&#8377; 46,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LenoovoLaptop1',46000,'images/laptop4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- watches -->
+                <fieldset class="pCardFieldset" id="eeWatches">
+                    <legend class="pCardLegend">Watches</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/watch1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Aple Watch 1</h4>
+                                <p class="pCardNewPrice">&#8377; 49,000</p>
+                                <p class="pCardOldPrice">&#8377; 50,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('ApleWatch1',49000,'images/watch1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/watch2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Titin Watch 1</h4>
+                                <p class="pCardNewPrice">&#8377; 19,000</p>
+                                <p class="pCardOldPrice">&#8377; 20,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('TitinWatch1',19000,'images/watch2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/watch3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Redmii Watch 1</h4>
+                                <p class="pCardNewPrice">&#8377; 17,500</p>
+                                <p class="pCardOldPrice">&#8377; 18,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('RedmiiWatch1',17500,'images/watch3.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/watch4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">F Shock Watch 1</h4>
+                                <p class="pCardNewPrice">&#8377; 19,000</p>
+                                <p class="pCardOldPrice">&#8377; 20,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('FShockWatch1',19000,'images/watch4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <!-- right container -->
+            <div id="eeRightContainer">
+                <h1 style="color: purple;">Some Quick Links</h1>
+                <a href="#eeMobiles"><img src="images/mobile5.jpeg"></a>
+                <a href="#eeTelevisions"><img src="images/led5.jpeg"></a>
+                <a href="#eeLaptops"><img src="images/laptop5.jpeg"></a>
+                <a href="#eeWatches"><img src="images/watch5.jpeg"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- apparels section -->
+    <section id="apparelsSection" style="display: none;">
+        <h1 id="aaMainHeading">Apparels</h1>
+        <i class="fa fa-bars fa-2x" id="apparelsHam" onclick="apparelsHam()"></i>
+        <div id="aaNavbar"><a href="#aaShirts">Shirts</a><a href="#aaJeans">Jeans</a><a
+                href="#aaSweatshirts">Sweatshirts</a><a href="#aaTshirts">T-Shirts</a></div>
+
+        <!-- main container -->
+        <div id="aaMainContainer">
+
+            <!-- left container -->
+            <div id="aaLeftContainer">
+                <!-- shirts -->
+                <fieldset class="pCardFieldset" id="aaShirts">
+                    <legend class="pCardLegend">Shirts</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/shirt1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Array Shirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 800</p>
+                                <p class="pCardOldPrice">&#8377; 850</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('ArrayShirt1',800,'images/shirt1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/shirt2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Morc Shirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,000</p>
+                                <p class="pCardOldPrice">&#8377; 1,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('MorcShirt1',1000,'images/shirt2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/shirt3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Bold Streat Shirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 550</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BoldStreatShirt1',500,'images/shirt3.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/shirt4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Luis Philipe Shirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 999</p>
+                                <p class="pCardOldPrice">&#8377; 1,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LuisPhilipeShirt1',999,'images/shirt4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- jeans -->
+                <fieldset class="pCardFieldset" id="aaJeans">
+                    <legend class="pCardLegend">Jeans</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/jeans1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Armani Jeans 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,000</p>
+                                <p class="pCardOldPrice">&#8377; 1,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('ArmaniJeans1',1000,'images/jeans1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/jeans2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Lea Jeans 1</h4>
+                                <p class="pCardNewPrice">&#8377; 2,000</p>
+                                <p class="pCardOldPrice">&#8377; 3,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LeaJeans1',2000,'images/jeans2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/jeans3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Doke Jeans 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 2,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('DokeJeans1',1500,'images/jeans3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/jeans4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Benetin Jeans 1</h4>
+                                <p class="pCardNewPrice">&#8377; 2,000</p>
+                                <p class="pCardOldPrice">&#8377; 2,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BenetinJeans1',2000,'images/jeans4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- sweatshirts -->
+                <fieldset class="pCardFieldset" id="aaSweatshirts">
+                    <legend class="pCardLegend">Sweatshirts</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/sweatshirt1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Rebook Sweatshirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 4,000</p>
+                                <p class="pCardOldPrice">&#8377; 5,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('RebookSweatshirt1',4000,'images/sweatshirt1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/sweatshirt2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Pumo Sweatshirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 5,000</p>
+                                <p class="pCardOldPrice">&#8377; 5,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('PumoSweatshirt1',5000,'images/sweatshirt2.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/sweatshirt3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Doke Sweatshirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 4,500</p>
+                                <p class="pCardOldPrice">&#8377; 4,800</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('DokeSweatshirt1',4500,'images/sweatshirt3.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/sweatshirt4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">File Sweatshirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 1,600</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('FileSweatshirt1',1500,'images/sweatshirt4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- t-shirts -->
+                <fieldset class="pCardFieldset" id="aaTshirts">
+                    <legend class="pCardLegend">T-Shirts</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/tshirt1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Leviis Tshirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 600</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LeviisTshirt1',500,'images/tshirt1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/tshirt2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Morc Tshirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 600</p>
+                                <p class="pCardOldPrice">&#8377; 650</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('MorcTshirt1',600,'images/tshirt2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/tshirt3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Luis Tshirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 400</p>
+                                <p class="pCardOldPrice">&#8377; 500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LuisTshirt1',400,'images/tshirt3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/tshirt4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Monti Carlo Tshirt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 800</p>
+                                <p class="pCardOldPrice">&#8377; 900</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('MontiCarloTshirt1',800,'images/tshirt4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- right container -->
+            <div id="aaRightContainer">
+                <h1 style="color: purple;">Some Quick Links</h1>
+                <a href="#aaShirts"><img src="images/shirt5.jpeg"></a>
+                <a href="#aaJeans"><img src="images/jeans5.jpeg"></a>
+                <a href="#aaSweatshirts"><img src="images/sweatshirt5.jpeg"></a>
+                <a href="#aaTshirts"><img src="images/tshirt5.jpeg"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- footwears section -->
+
+    <section id="footwearsSection" style="display: none;">
+        <h1 id="ffMainHeading">Footwears</h1>
+        <i class="fa fa-bars fa-2x" id="footwearsHam" onclick="footwearsHam()"></i>
+        <div id="ffNavbar"><a href="#ffShoes">Shoes</a><a href="#ffSandals">Sandals</a><a
+                href="#ffSlippers">Slippers</a><a href="#ffHeels">Heels</a></div>
+
+        <!-- main container -->
+        <div id="ffMainContainer">
+
+            <!-- left container -->
+            <div id="ffLeftContainer">
+                <!-- shoes -->
+                <fieldset class="pCardFieldset" id="ffShoes">
+                    <legend class="pCardLegend">Shoes</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/shoes1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Nik Shoes 1</h4>
+                                <p class="pCardNewPrice">&#8377; 850</p>
+                                <p class="pCardOldPrice">&#8377; 950</p>
+                                <button type="button" class="pCardBtn"
+                                    onclick="cartAdd('NikShoes1',850,'images/shoes1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/shoes2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Ado Shoes 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,000</p>
+                                <p class="pCardOldPrice">&#8377; 1,600</p>
+                                <button type="button" class="pCardBtn"
+                                    onclick="cartAdd('AdoShoes1',1000,'images/shoes2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/shoes3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Bold Shoes 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 550</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BoldShoes1',500,'images/shoes3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/shoes4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Phy Shoes 1</h4>
+                                <p class="pCardNewPrice">&#8377; 899</p>
+                                <p class="pCardOldPrice">&#8377; 1,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('PhyShoes1',899,'images/shoes4.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- sandals -->
+                <fieldset class="pCardFieldset" id="ffSandals">
+                    <legend class="pCardLegend">Sandals</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/sandal1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Armani Sandals 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,000</p>
+                                <p class="pCardOldPrice">&#8377; 1,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('ArmaniSandals1',1000,'images/sandal1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/sandal2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Lit Sandals 1</h4>
+                                <p class="pCardNewPrice">&#8377; 2,500</p>
+                                <p class="pCardOldPrice">&#8377; 3,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LitSandals1',2500,'images/sandal2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/sandal3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Dok Sandals 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 2,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('DokSandals1',1500,'images/sandal3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/sandal4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Benet Sandals 1</h4>
+                                <p class="pCardNewPrice">&#8377; 2,000</p>
+                                <p class="pCardOldPrice">&#8377; 2,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BenetSandals1',2000,'images/sandal4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- Slippers -->
+                <fieldset class="pCardFieldset" id="ffSlippers">
+                    <legend class="pCardLegend">Slippers</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/slippers1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Rebook Slippers 1</h4>
+                                <p class="pCardNewPrice">&#8377; 400</p>
+                                <p class="pCardOldPrice">&#8377; 500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('RebookSlippers1',400,'images/slippers1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/slippers2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Polo Slippers 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 800</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('PoloSlippers1',500,'images/slippers2.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/slippers3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">U.S. Slippers 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 2,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('U.S.Slippers1',1500,'images/slippers3.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/slippers4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Filk Slippers 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 1,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('FilkSlippers1',500,'images/slippers4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- Heels -->
+                <fieldset class="pCardFieldset" id="ffHeels">
+                    <legend class="pCardLegend">Heels</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/heels1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Levi Heels 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 2,400</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LeviHeels1',1500,'images/heels1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/heels2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Merc Heels 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,600</p>
+                                <p class="pCardOldPrice">&#8377; 2,250</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('MercHeels1',1600,'images/heels2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/heels3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Lui Heels 1</h4>
+                                <p class="pCardNewPrice">&#8377; 400</p>
+                                <p class="pCardOldPrice">&#8377; 500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LuiHeels1',400,'images/heels3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/heels4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Carl Heels 1</h4>
+                                <p class="pCardNewPrice">&#8377; 800</p>
+                                <p class="pCardOldPrice">&#8377; 900</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('CarloHeels1',800,'images/heels4.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- right container -->
+            <div id="ffRightContainer">
+                <h1 style="color: purple;">Some Quick Links</h1>
+                <a href="#ffShoes"><img src="images/shoes5.jpeg"></a>
+                <a href="#ffSandals"><img src="images/sandal5.jpeg"></a>
+                <a href="#ffSlippers"><img src="images/slippers5.jpeg"></a>
+                <a href="#ffHeels"><img src="images/heels5.jpeg"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- stationaries section -->
+
+    <section id="stationariesSection" style="display: none;">
+        <h1 id="ssMainHeading">Stationaries</h1>
+        <i class="fa fa-bars fa-2x" id="stationariesHam" onclick="stationariesHam()"></i>
+        <div id="ssNavbar"><a href="#ssPens">Pens</a><a href="#ssBooks">Books</a><a href="#ssColors">Colors</a><a
+                href="#ssRegisters">Registers</a></div>
+
+        <!-- main container -->
+        <div id="ssMainContainer">
+
+            <!-- left container -->
+            <div id="ssLeftContainer">
+                <!-- Pens -->
+                <fieldset class="pCardFieldset" id="ssPens">
+                    <legend class="pCardLegend">Pens</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/pen1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Parker Pen 1</h4>
+                                <p class="pCardNewPrice">&#8377; 870</p>
+                                <p class="pCardOldPrice">&#8377; 1,050</p>
+                                <button type="button" class="pCardBtn"
+                                    onclick="cartAdd('ParkerPen1',870,'images/pen1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/pen2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Cardian Pen 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,000</p>
+                                <p class="pCardOldPrice">&#8377; 1,600</p>
+                                <button type="button" class="pCardBtn"
+                                    onclick="cartAdd('CardianPen1',1000,'images/pen2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/pen3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">BG Pen 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 1,550</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BGPen1',1500,'images/pen3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/pen4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">DG Pen 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,899</p>
+                                <p class="pCardOldPrice">&#8377; 2,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('DGPen1',899,'images/pen4.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- Books -->
+                <fieldset class="pCardFieldset" id="ssBooks">
+                    <legend class="pCardLegend">Books</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/book1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">HP Book 1</h4>
+                                <p class="pCardNewPrice">&#8377; 3,000</p>
+                                <p class="pCardOldPrice">&#8377; 3,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('HPBook1',3000,'images/book1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/book2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">HP Book 2</h4>
+                                <p class="pCardNewPrice">&#8377; 3,500</p>
+                                <p class="pCardOldPrice">&#8377; 4,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('HPBook2',3500,'images/book2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/book4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">HP Book 3</h4>
+                                <p class="pCardNewPrice">&#8377; 4,500</p>
+                                <p class="pCardOldPrice">&#8377; 5,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('HPBook3',4500,'images/book4.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/book3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">HP Book 4</h4>
+                                <p class="pCardNewPrice">&#8377; 4,000</p>
+                                <p class="pCardOldPrice">&#8377; 4,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('HPBook4',4000,'images/book3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- Colors -->
+                <fieldset class="pCardFieldset" id="ssColors">
+                    <legend class="pCardLegend">Colors</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/colorbox1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Rembo Colorbox 1</h4>
+                                <p class="pCardNewPrice">&#8377; 400</p>
+                                <p class="pCardOldPrice">&#8377; 500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('RemboColorbox1',400,'images/colorbox1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/colorbox2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Pool Colorbox 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 800</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('PoolColorbox1',500,'images/colorbox2.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/colorbox3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">UPO Colorbox 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 2,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('UPOColorbox1',1500,'images/colorbox3.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/colorbox4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Nik Colorbox 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 1,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('NikColorbox1',500,'images/colorbox4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <!-- Registers -->
+                <fieldset class="pCardFieldset" id="ssRegisters">
+                    <legend class="pCardLegend">Registers</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/register1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Liv Register 1</h4>
+                                <p class="pCardNewPrice">&#8377; 100</p>
+                                <p class="pCardOldPrice">&#8377; 240</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LivRegister1',100,'images/register1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/register2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Merc Register 1</h4>
+                                <p class="pCardNewPrice">&#8377; 600</p>
+                                <p class="pCardOldPrice">&#8377; 1,050</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('MercRegister1',600,'images/register2.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/register4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Black Register 1</h4>
+                                <p class="pCardNewPrice">&#8377; 400</p>
+                                <p class="pCardOldPrice">&#8377; 500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BlackRegister1',400,'images/register4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/register5.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Blue Register 1</h4>
+                                <p class="pCardNewPrice">&#8377; 600</p>
+                                <p class="pCardOldPrice">&#8377; 700</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BlueRegister1',600,'images/register5.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- right container -->
+            <div id="ssRightContainer">
+                <h1 style="color: purple;">Some Quick Links</h1>
+                <a href="#ssPens"><img src="images/pen5.jpeg"></a>
+                <a href="#ssBooks"><img src="images/book5.jpeg"></a>
+                <a href="#ssColors"><img src="images/colorbox5.jpeg"></a>
+                <a href="#ssRegisters"><img src="images/register5.jpeg"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- accessories section -->
+
+    <section id="accessoriesSection" style="display: none;">
+        <h1 id="rrMainHeading">Accessories</h1>
+        <i class="fa fa-bars fa-2x" id="accessoriesHam" onclick="accessoriesHam()"></i>
+        <div id="rrNavbar"><a href="#rrBracelets">Bracelets</a><a href="#rrPerfumes">Perfumes</a><a href="#rrBelts">Belts</a><a href="#rrWallets">Wallets</a></div>
+
+        <!-- main container -->
+        <div id="rrMainContainer">
+
+            <!-- left container -->
+            <div id="rrLeftContainer">
+
+                <!-- Bracelets -->
+                <fieldset class="pCardFieldset" id="rrBracelets">
+                    <legend class="pCardLegend">Bracelets</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/bracelet1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Rm Bracelet 1</h4>
+                                <p class="pCardNewPrice">&#8377; 890</p>
+                                <p class="pCardOldPrice">&#8377; 1,000</p>
+                                <button type="button" class="pCardBtn"
+                                    onclick="cartAdd('RmBracelet1',890,'images/bracelet1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/bracelet2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Rome Bracelet 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,250</p>
+                                <p class="pCardOldPrice">&#8377; 1,500</p>
+                                <button type="button" class="pCardBtn"
+                                    onclick="cartAdd('RomeBracelet1',1250,'images/bracelet2.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/bracelet3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Bold Bracelet 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,000</p>
+                                <p class="pCardOldPrice">&#8377; 1,250</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BoldBracelet1',1000,'images/bracelet3.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/bracelet4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Phy Bracelet 1</h4>
+                                <p class="pCardNewPrice">&#8377; 899</p>
+                                <p class="pCardOldPrice">&#8377; 1,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('PhyBracelet1',899,'images/bracelet4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Perfumes -->
+                <fieldset class="pCardFieldset" id="rrPerfumes">
+                    <legend class="pCardLegend">Perfumes</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/perfume1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Elite Perfume 1</h4>
+                                <p class="pCardNewPrice">&#8377; 3,000</p>
+                                <p class="pCardOldPrice">&#8377; 3,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('ElitePerfume1',3000,'images/perfume1.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/perfume2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Venue Perfume 1</h4>
+                                <p class="pCardNewPrice">&#8377; 4,750</p>
+                                <p class="pCardOldPrice">&#8377; 5,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('VenuePerfume1',4750,'images/perfume2.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/perfume3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Polo Perfume 1</h4>
+                                <p class="pCardNewPrice">&#8377; 7,000</p>
+                                <p class="pCardOldPrice">&#8377; 8,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('PoloPerfume1',7000,'images/perfume3.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/perfume4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Benet Perfume 1</h4>
+                                <p class="pCardNewPrice">&#8377; 6,000</p>
+                                <p class="pCardOldPrice">&#8377; 7,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('BenetPerfume1',6000,'images/perfume4.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Belts -->
+                <fieldset class="pCardFieldset" id="rrBelts">
+                    <legend class="pCardLegend">Belts</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/belt1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Olex Belt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 400</p>
+                                <p class="pCardOldPrice">&#8377; 500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('OlexBelt1',400,'images/belt1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/belt2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Gen Belt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 800</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('GenBelt1',500,'images/belt2.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/belt3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">US Belt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 2,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('UsBelt1',1500,'images/belt3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/belt4.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Fik Belt 1</h4>
+                                <p class="pCardNewPrice">&#8377; 500</p>
+                                <p class="pCardOldPrice">&#8377; 1,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('FikBelt1',500,'images/belt4.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <!-- Wallets -->
+                <fieldset class="pCardFieldset" id="rrWallets">
+                    <legend class="pCardLegend">Wallets</legend>
+                    <div class="pCardContainer">
+                        <div class="pCard">
+                            <img src="images/wallet1.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Levi Wallet 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,500</p>
+                                <p class="pCardOldPrice">&#8377; 2,000</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LeviWallet1',1500,'images/wallet1.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/wallet2.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Hamilton Wallet 1</h4>
+                                <p class="pCardNewPrice">&#8377; 2,600</p>
+                                <p class="pCardOldPrice">&#8377; 3,250</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('HamiltonWallet1',2600,'images/wallet2.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/wallet3.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">LP Wallet 1</h4>
+                                <p class="pCardNewPrice">&#8377; 3,400</p>
+                                <p class="pCardOldPrice">&#8377; 3,500</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('LPWallet1',3400,'images/wallet3.jpeg')">Add to Cart</button><br>
+                            </div>
+                        </div>
+                        <div class="pCard">
+                            <img src="images/wallet5.jpeg" alt="Product">
+                            <div class="pCardDiv">
+                                <h4 class="pCardName">Carlo Wallet 1</h4>
+                                <p class="pCardNewPrice">&#8377; 1,800</p>
+                                <p class="pCardOldPrice">&#8377; 2,900</p><button type="button" class="pCardBtn"
+                                    onclick="cartAdd('CarloWallet1',1800,'images/wallet5.jpeg')">Add to
+                                    Cart</button><br>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- right container -->
+            <div id="rrRightContainer">
+                <h1 style="color: purple;">Some Quick Links</h1>
+                <a href="#rrBracelets"><img src="images/bracelet5.jpeg"></a>
+                <a href="#rrPerfumes"><img src="images/perfume5.jpeg"></a>
+                <a href="#rrBelts"><img src="images/belt5.jpeg"></a>
+                <a href="#rrWallets"><img src="images/wallet5.jpeg"></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer>
+        <div id="backToTop"><a href="#">Back to Top</a></div>
+        <h2 id="footerFollow">Follow us on</h2>
+        <div id="footerLinksDiv">
+            <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
+            <a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+            <a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin fa-2x"></i></a>
+        </div>
+    </footer>
+    
+    <script src="home.js"></script>
+</body>
+
+</html>
